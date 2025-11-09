@@ -65,6 +65,7 @@ const PROVIDER_LOGOS: Record<string, React.ComponentType<{ className?: string }>
   anthropic: AnthropicLogo,
   'google-ai-studio': GoogleLogo,
   cerebras: CerebrasLogo,
+  openrouter: CloudflareLogo,
 };
 
 interface BYOKProvider {
