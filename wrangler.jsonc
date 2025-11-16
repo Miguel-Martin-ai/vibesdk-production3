@@ -55,22 +55,7 @@
             "remote": true
         }
     ],
-	"containers": [
-		{
-			"class_name": "UserAppSandboxService",
-			"image": "./SandboxDockerfile",
-            // "image": "registry.cloudflare.com/vibesdk-production-userappsandboxservice:cfe197fc",
-            // Altering max_instances value will have no effect. Please use the MAX_SANDBOX_INSTANCES var instead.
-			"max_instances": 1400,
-            // ATTENTION: Altering instance_type value will have no effect. Please use the SANDBOX_INSTANCE_TYPE var instead.
-            "instance_type": {
-                "vcpu": 4,
-                "memory_mib": 8192,
-                "disk_mb": 10240
-            },
-            "rollout_step_percentage": 100
-		}
-	],
+
 	"d1_databases": [
 		{
 			"binding": "DB",
@@ -88,7 +73,20 @@
 			},
             {
                 "class_name": "UserAppSandboxService",
-                "name": "Sandbox"
+                "name": "Sandbox",
+                "container": {
+                    "image": "./SandboxDockerfile",
+                    // "image": "registry.cloudflare.com/vibesdk-production-userappsandboxservice:cfe197fc",
+                    // Altering max_instances value will have no effect. Please use the MAX_SANDBOX_INSTANCES var instead.
+                    "max_instances": 1400,
+                    // ATTENTION: Altering instance_type value will have no effect. Please use the SANDBOX_INSTANCE_TYPE var instead.
+                    "instance_type": {
+                        "vcpu": 4,
+                        "memory_mib": 8192,
+                        "disk_mb": 10240
+                    },
+                    "rollout_step_percentage": 100
+                }
             },
             {
                 "class_name": "DORateLimitStore",
