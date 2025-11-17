@@ -160,6 +160,20 @@ export function getTemplatesData(): SecretTemplate[] {
 			required: false,
 			category: 'byok',
 		},
+		{
+			id: 'OPENROUTER_API_KEY_BYOK',
+			displayName: 'OpenRouter (BYOK)',
+			envVarName: 'OPENROUTER_API_KEY_BYOK',
+			provider: 'openrouter',
+			icon: '🔀',
+			description:
+				'Use your OpenRouter API key to access multiple AI providers including code models',
+			instructions: 'Go to OpenRouter → Account → Keys → Create new key',
+			placeholder: 'sk-or-...',
+			validation: '^sk-or-.{10,}$',
+			required: false,
+			category: 'byok',
+		},
 
 		// Development Tools
 		{
