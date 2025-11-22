@@ -46,9 +46,17 @@ interface ConfigModalProps {
 }
 
 
-// Helper to extract provider from model name (e.g., "openai/gpt-4" -> "openai")
+// Helper to extract provider from model name (e.g., "openai/gpt-4" -> "openai", "[openrouter]qwen/..." -> "openrouter")
 const getProviderFromModel = (modelName: string): string => {
   if (!modelName || modelName === 'default') return '';
+  
+  // Check for forced override pattern: [provider]model
+  const forceMatch = modelName.match(/^\[([^\]]+)\]/);
+  if (forceMatch) {
+    return forceMatch[1];
+  }
+  
+  // Check for standard pattern: provider/model
   return modelName.split('/')[0] || '';
 };
 
