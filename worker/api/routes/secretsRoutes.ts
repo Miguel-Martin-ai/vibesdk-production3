@@ -19,13 +19,10 @@ export function setupSecretsRoutes(app: Hono<AppEnv>): void {
     // Secrets management routes
     secretsRouter.get('/', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.getAllSecrets));
 
-    // DISABLED: BYOK Disabled for security reasons
-    // secretsRouter.post('/', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.storeSecret));
-    secretsRouter.post('/', setAuthLevel(AuthConfig.authenticated), (c) => {
-        return c.json({ message: 'BYOK is not supported for now' });
-    });
-    // secretsRouter.patch('/:secretId/toggle', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.toggleSecret));
-    // secretsRouter.delete('/:secretId', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.deleteSecret));
+    // BYOK routes enabled
+    secretsRouter.post('/', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.storeSecret));
+    secretsRouter.patch('/:secretId/toggle', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.toggleSecret));
+    secretsRouter.delete('/:secretId', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.deleteSecret));
     
     // Templates route
     secretsRouter.get('/templates', setAuthLevel(AuthConfig.authenticated), adaptController(SecretsController, SecretsController.getTemplates));
