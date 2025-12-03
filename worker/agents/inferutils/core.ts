@@ -271,11 +271,6 @@ export async function getConfigurationForModel(
                 baseURL: 'https://openrouter.ai/api/v1',
                 apiKey: env.OPENROUTER_API_KEY,
             };
-        } else if (provider === 'gemini') {
-            return {
-                baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
-                apiKey: env.GOOGLE_AI_STUDIO_API_KEY,
-            };
         } else if (provider === 'claude') {
             return {
                 baseURL: 'https://api.anthropic.com/v1/',
@@ -634,12 +629,6 @@ export async function infer<OutputSchema extends z.AnyZodObject>({
                 
                 for await (const event of response) {
                     const delta = (event as ChatCompletionChunk).choices[0]?.delta;
-                    
-                    // Provider-specific logging
-                    const provider = modelName.split('/')[0];
-                    if (delta?.tool_calls && (provider === 'google-ai-studio' || provider === 'gemini')) {
-                        console.log(`[PROVIDER_DEBUG] ${provider} tool_calls delta:`, JSON.stringify(delta.tool_calls, null, 2));
-                    }
                     
                     if (delta?.tool_calls) {
                         try {

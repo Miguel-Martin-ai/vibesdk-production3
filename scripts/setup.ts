@@ -369,33 +369,31 @@ class SetupManager {
 		console.log('\n🔧 AI Provider Configuration');
 		console.log('Available providers:');
 		console.log('   1. OpenAI (for GPT models)');
-		console.log('   2. Anthropic (for Claude models)');
-		console.log('   3. Google AI Studio (for Gemini models) [DEFAULT]');
-		console.log('   4. Cerebras (for open source models)');
-		console.log('   5. OpenRouter (for various models)');
-		console.log('   6. Custom provider\n');
+		console.log('   2. Anthropic (for Claude models) [DEFAULT]');
+		console.log('   3. Cerebras (for open source models)');
+		console.log('   4. OpenRouter (for various models)');
+		console.log('   5. Custom provider\n');
 
-		const providerChoice = await this.prompt('Select providers (comma-separated numbers, e.g., 1,2,3): ');
-		const selectedProviders = providerChoice.split(',').map(n => parseInt(n.trim())).filter(n => n >= 1 && n <= 6);
+		const providerChoice = await this.prompt('Select providers (comma-separated numbers, e.g., 1,2): ');
+		const selectedProviders = providerChoice.split(',').map(n => parseInt(n.trim())).filter(n => n >= 1 && n <= 5);
 
 		if (selectedProviders.length === 0) {
 			console.log('⚠️  No providers selected - you MUST configure at least one provider!');
-			console.log('   Adding Google AI Studio as default...');
-			selectedProviders.push(3);
+			console.log('   Adding Anthropic as default...');
+			selectedProviders.push(2);
 		}
 
 		// Process selected providers
 		const providerMap = {
 			1: { name: 'OpenAI', key: 'OPENAI_API_KEY', provider: 'openai' },
 			2: { name: 'Anthropic', key: 'ANTHROPIC_API_KEY', provider: 'anthropic' },
-			3: { name: 'Google AI Studio', key: 'GOOGLE_AI_STUDIO_API_KEY', provider: 'google-ai-studio' },
-			4: { name: 'Cerebras', key: 'CEREBRAS_API_KEY', provider: 'cerebras' },
-			5: { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', provider: 'openrouter' }
+			3: { name: 'Cerebras', key: 'CEREBRAS_API_KEY', provider: 'cerebras' },
+			4: { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', provider: 'openrouter' }
 		};
 
 		console.log('\n🔑 API Key Configuration');
 		for (const choice of selectedProviders) {
-			if (choice === 6) {
+			if (choice === 5) {
 				// Custom provider
 				const customProviderName = await this.prompt('Enter custom provider name: ');
 				if (customProviderName) {
@@ -418,14 +416,6 @@ class SetupManager {
 					}
 				}
 			}
-		}
-
-		// Warning about config.ts if not using Gemini as default
-		const hasGemini = selectedProviders.includes(3);
-		if (!hasGemini) {
-			console.log('\n⚠️  IMPORTANT: You selected providers other than Google AI Studio (Gemini).');
-			console.log('   You MUST edit worker/agents/inferutils/config.ts to change the default model configurations');
-			console.log('   from Gemini models to your selected providers!\n');
 		}
 
 		// OAuth and other configuration with smart prompts
@@ -455,12 +445,6 @@ class SetupManager {
 		// Provide guidance on model configuration
 		if (providedProviders.length > 0) {
 			console.log(`\n✅ API keys configured for: ${providedProviders.join(', ')}`);
-		}
-
-		if (!providedProviders.includes('google-ai-studio')) {
-			console.log('\n⚠️  No Google AI Studio key provided.');
-			console.log('   You may need to update model configs in worker/agents/inferutils/config.ts');
-			console.log('   to use alternative models (OpenAI, Anthropic, etc.) for Gemini fallbacks.');
 		}
 
 		// Generate or preserve required secrets
@@ -1752,19 +1736,19 @@ class SetupManager {
 		}
 
 		// Additional setup information
-		const hasGoogleAI = Object.keys(this.config.devVars).includes('GOOGLE_AI_STUDIO_API_KEY');
+		const hasAnthropicAI = Object.keys(this.config.devVars).includes('ANTHROPIC_API_KEY');
 		const hasOAuth = ['GOOGLE_CLIENT_ID', 'GITHUB_CLIENT_ID', 'GITHUB_EXPORTER_CLIENT_ID'].some(key =>
 			Object.keys(this.config.devVars).includes(key)
 		);
 		const hasRemoteR2 = resources.r2Buckets.some(bucket => bucket.accessible);
 		const isARM64 = process.arch === 'arm64';
 
-		if (!hasGoogleAI || hasOAuth || !hasRemoteR2 || isARM64) {
+		if (!hasAnthropicAI || hasOAuth || !hasRemoteR2 || isARM64) {
 			console.log('\n💡 Setup Information:');
 
-			if (!hasGoogleAI) {
+			if (!hasAnthropicAI) {
 				console.log('   • Edit worker/agents/inferutils/config.ts to configure AI models');
-				console.log('   • Update fallback models from Gemini to your available providers');
+				console.log('   • Update models to use your available providers');
 			}
 
 			if (hasOAuth) {
