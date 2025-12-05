@@ -60,7 +60,6 @@ import { ByokApiKeysModal } from '@/components/byok-api-keys-modal';
 // Import provider logos (reusing existing pattern from BYOK modal)
 import OpenAILogo from '@/assets/provider-logos/openai.svg?react';
 import AnthropicLogo from '@/assets/provider-logos/anthropic.svg?react';
-import GoogleLogo from '@/assets/provider-logos/google.svg?react';
 import CerebrasLogo from '@/assets/provider-logos/cerebras.svg?react';
 import CloudflareLogo from '@/assets/provider-logos/cloudflare.svg?react';
 
@@ -455,8 +454,6 @@ export default function SettingsPage() {
 	> = {
 		openai: OpenAILogo,
 		anthropic: AnthropicLogo,
-		'google-ai-studio': GoogleLogo,
-		google: GoogleLogo,
 		cerebras: CerebrasLogo,
 		cloudflare: CloudflareLogo,
 	};
@@ -635,8 +632,8 @@ export default function SettingsPage() {
 								<p className="text-sm text-text-tertiary">
 									AI provider API keys are managed in the "API
 									Keys & Secrets" section below. Configure
-									your OpenAI, Anthropic, Google AI, and
-									OpenRouter keys there.
+									your OpenAI, Anthropic, and Cerebras
+									keys there.
 								</p>
 
 								<Button

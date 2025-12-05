@@ -38,7 +38,6 @@ import type { SecretTemplate } from '@/api-types';
 // Import provider logos
 import OpenAILogo from '@/assets/provider-logos/openai.svg?react';
 import AnthropicLogo from '@/assets/provider-logos/anthropic.svg?react';
-import GoogleLogo from '@/assets/provider-logos/google.svg?react';
 import CerebrasLogo from '@/assets/provider-logos/cerebras.svg?react';
 import CloudflareLogo from '@/assets/provider-logos/cloudflare.svg?react';
 
@@ -63,7 +62,6 @@ interface ManagedSecret {
 const PROVIDER_LOGOS: Record<string, React.ComponentType<{ className?: string }>> = {
   openai: OpenAILogo,
   anthropic: AnthropicLogo,
-  'google-ai-studio': GoogleLogo,
   cerebras: CerebrasLogo,
 };
 

@@ -125,7 +125,7 @@ ${error}`);
                 messages,
                 agentActionName: "projectSetup",
                 context: this.inferenceContext,
-                modelName: error? AIModels.GEMINI_2_5_FLASH : undefined,
+                modelName: error? AIModels.CLAUDE_3_5_SONNET_LATEST : undefined,
             });
             this.logger.info(`Generated setup commands: ${results.string}`);
 

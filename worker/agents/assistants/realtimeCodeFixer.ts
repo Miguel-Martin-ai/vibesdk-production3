@@ -218,7 +218,7 @@ export class RealtimeCodeFixer extends Assistant<Env> {
         env: Env,
         inferenceContext: InferenceContext,
         lightMode: boolean = false,
-        altPassModelOverride?: string,// = AIModels.GEMINI_2_5_FLASH,
+        altPassModelOverride?: string,
         agentActionNameOverride?: AgentActionKey,
         systemPrompt: string = SYSTEM_PROMPT,
         userPrompt: string = USER_PROMPT
@@ -491,7 +491,7 @@ ${block.error}
             const llmResponse = await infer({
                 env: this.env,
                 metadata: this.inferenceContext,
-                modelName: AIModels.GEMINI_2_5_FLASH,
+                modelName: AIModels.CLAUDE_3_5_SONNET_LATEST,
                 reasoning_effort: 'low',
                 temperature: 0.0,
                 maxTokens: 10000,
