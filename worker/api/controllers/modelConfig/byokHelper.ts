@@ -71,8 +71,11 @@ export function getByokModels(
 		.filter((status) => status.hasValidKey)
 		.forEach((status) => {
 			// Get models for this provider dynamically from AIModels enum
+			// Support two patterns:
+			// 1. Standard: provider/model (e.g., "openai/gpt-4")
+			// 2. Forced override: [provider]model (e.g., "[openrouter]qwen/...")
 			const providerModels = Object.values(AIModels).filter((model) =>
-				model.startsWith(`${status.provider}/`),
+				model.startsWith(`${status.provider}/`) || model.startsWith(`[${status.provider}]`),
 			);
 
 			if (providerModels.length > 0) {
@@ -159,8 +162,16 @@ export function validateModelAccessForEnvironment(
  * Get provider name from model string
  */
 export function getProviderFromModel(model: AIModels | string): string {
-	if (typeof model === 'string' && model.includes('/')) {
-		return model.split('/')[0];
+	if (typeof model === 'string') {
+		// Check for forced override pattern: [provider]model
+		const forceMatch = model.match(/^\[([^\]]+)\]/);
+		if (forceMatch) {
+			return forceMatch[1];
+		}
+		// Check for standard pattern: provider/model
+		if (model.includes('/')) {
+			return model.split('/')[0];
+		}
 	}
 	return 'cloudflare';
 }
