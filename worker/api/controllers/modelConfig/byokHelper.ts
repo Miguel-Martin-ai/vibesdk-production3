@@ -96,6 +96,7 @@ export function getPlatformEnabledProviders(env: Env): string[] {
 		'openai',
 		'google-ai-studio',
 		'cerebras',
+		'openrouter',
 		'groq',
 	];
 
