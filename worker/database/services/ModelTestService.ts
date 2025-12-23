@@ -176,7 +176,7 @@ export class ModelTestService extends BaseService {
             'anthropic': AIModels.CLAUDE_4_SONNET,
             'google-ai-studio': AIModels.GEMINI_2_5_FLASH,
             'gemini': AIModels.GEMINI_2_5_FLASH,
-            // 'openrouter': AIModels.OPENROUTER_QWEN_3_CODER, // Removed - not available
+            'openrouter': AIModels.OPENROUTER_QWEN_3_CODER,
             'cerebras': AIModels.CEREBRAS_GPT_OSS
         };
 
